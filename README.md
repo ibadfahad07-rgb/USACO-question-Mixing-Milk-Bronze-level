@@ -39,14 +39,16 @@ Pour 2->3:  0  0  12
 (The last three states then repeat in a cycle...)
 ## Algorithm :
 
-1. Read capacities c1, c2, c3 and current amounts m1, m2, m3 into arrays cap[] and milk[].
-2. Define the cyclic pour order as pairs: (0→1), (1→2), (2→0), that are repeating.
-3. For pour = 1 to 100:
-4. Let a = source bucket index, b = destination bucket index (based on the cycle).
-5. Compute amount = minimum of (milk[a], cap[b] - milk[b]).
-6. Subtract amount from milk[a], add amount to milk[b].
-7. After all 100 pours, print milk[0], milk[1], milk[2] on separate lines.
+## Algorithm :
 
+1. Read three lines of input, each containing a bucket's capacity and current milk amount.
+2. Store capacities in cap[] and milk amounts in milk[], indexed 0, 1, 2.
+3. For i = 0 to 99 (100 pours total):
+4. Set a = i % 3 (the source bucket) and b = (i+1) % 3 (the destination bucket) — this naturally cycles through 0→1, 1→2, 2→0 as i increases.
+5. Compute space = cap[b] - milk[b] (how much room is left in the destination).
+6. Compute amount = min(milk[a], space) (pour as much as possible without overflowing or emptying past zero).
+7. Subtract amount from milk[a] and add it to milk[b].
+8. After all 100 pours, print the final values in milk[].
 ## Explanation
 
 This one is really just about carefully simulating what's described, step by step, since 100 pours is such a small number that we don't need to look for any shortcuts or patterns. Each pour follows the same rule: we move milk from the source bucket into the destination bucket, but we can never move more than what's actually in the source, and we can never overfill the destination past its capacity. So the amount that actually gets poured is just whichever is smaller — how much milk is currently in the source bucket, or how much empty space is left in the destination bucket. We take that amount away from the source and add it to the destination, then move on to the next pour in the cycle (1→2, 2→3, 3→1, and repeat). Since the pattern of who pours into whom cycles every 3 steps, we just keep looping through that pattern until we've done all 100 pours, then print out whatever's left in each bucket at the end.
