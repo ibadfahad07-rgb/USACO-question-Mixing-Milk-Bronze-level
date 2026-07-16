@@ -37,7 +37,6 @@ Pour 3->1:  10 0  2
 Pour 1->2:  0  10 2
 Pour 2->3:  0  0  12
 (The last three states then repeat in a cycle...)
-## Algorithm :
 
 ## Algorithm :
 
